@@ -6,6 +6,7 @@
 .container p {
   font-size: 17px;
   line-height: 22px;
+  white-space: break-spaces;
 }
 .title {
   font-size: 33px;
@@ -23,6 +24,7 @@
 }
 .originalMessageType {
   font-weight: 600;
+  text-transform: capitalize;
 }
 .revisionsSection {
   display: grid;
@@ -69,4 +71,21 @@
 .revisionsSectionBody {
   height: fit-content;
   overflow: hidden;
+}
+
+.copyButton {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  height: 54px;
+  text-transform: capitalize;
+  font-weight: 600;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-top: 19px;
+  margin-bottom: -16px;
+  padding-bottom: 2px;
+}
+
+.wrapper:has(.copyButton) {
+  margin-bottom: 36px;
 }

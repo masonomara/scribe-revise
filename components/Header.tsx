@@ -6,7 +6,7 @@ import styles from "../styles/Header.module.css";
 const Header = () => {
   return (
     <div className={styles.container}>
-      <div>ScribeRevise</div>
+      <h1>ScribeRevise</h1>
       {/* <div className={styles.menuBackground}  /> */}
     </div>
   );

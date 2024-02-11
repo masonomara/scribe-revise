@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import styles from "../styles/Message.module.css";
 
 type MessageProps = {
@@ -16,6 +19,15 @@ const Message = ({
   revisedMessage,
 }: MessageProps): JSX.Element => {
   const revisionsSections = revisions?.split(/\d+\./).filter(Boolean) || [];
+
+  const [copied, setCopied] = useState<boolean>(false);
+  const copyMessage = () => {
+    if (revisedMessage) {
+      setCopied(true);
+      navigator.clipboard.writeText(revisedMessage);
+      setTimeout(() => setCopied(false), 3000);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -48,8 +60,7 @@ const Message = ({
         ) : revisedMessage ? (
           <div>
             <p>{revisedMessage}</p>
-            <div></div>
-            <div>Copy</div>
+            <div className={styles.copyButton}></div>
           </div>
         ) : (
           <></>

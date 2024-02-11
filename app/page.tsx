@@ -2,8 +2,9 @@
 
 import Message from "@/components/Message";
 import styles from "./page.module.css";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import OpenAI from "openai";
+import Image from "next/image";
 
 const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY as string;
 
@@ -18,7 +19,6 @@ async function getOpenAICompletion(systemPrompt: string): Promise<string> {
     const response = await openai.chat.completions.create({
       messages: [{ role: "system", content: systemPrompt }],
       model: "gpt-3.5-turbo-0125",
-      max_tokens: 1024,
     });
 
     const output = response.choices[0]?.message?.content?.trim() ?? "";
@@ -68,7 +68,7 @@ export default function Home() {
           userMessageType || "copy"
         } to correct these shortcomings? Return just the rewritten ${
           userMessageType || "copy"
-        }.`
+        } with no quotation marks surrounding them`
       );
 
       const revisedMessageOutput = await getOpenAICompletion(
@@ -78,7 +78,7 @@ export default function Home() {
           userMessageType || "copy"
         } to correct these shortcomings? Return just the rewritten ${
           userMessageType || "copy"
-        } with no quotation marks surrounding them.`
+        } with no quotation marks surrounding them`
       );
 
       setRevisedMessage(revisedMessageOutput);
@@ -89,29 +89,231 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      {originalMessage ? (
-        <Message
-          title={"Original Message"}
-          originalMessage={originalMessage}
-          originalMessageType={originalMessageType}
-        />
-      ) : (
-        <>
-          <div>In the first 30 years of your life, you make your habits</div>
-          <div>Enter your type of message and your message for revisions</div>
-          <div>ScribeRevise will deliver a revised message for you to copy</div>
-        </>
-      )}
-      {revisions && <Message title={"Revisions"} revisions={revisions} />}
-      {revisedMessage && (
-        <Message title={"Revised Message"} revisedMessage={revisedMessage} />
-      )}
+      <div className={styles.messageContainer}>
+        {originalMessage ? (
+          <Message
+            title={"Original Message"}
+            originalMessage={originalMessage}
+            originalMessageType={originalMessageType}
+          />
+        ) : (
+          <div className={styles.emptyContainer}>
+            <div className={styles.styleGrid}>
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+            </div>
+            <p className={styles.styleText}>
+              Enter your message and optionally the message type for revisions.
+            </p>
+            <div className={styles.styleGridTwo}>
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+            </div>
+            <p className={styles.styleText}>
+              ScribeRevise will revise and rewrite the message for you.
+            </p>
+          </div>
+        )}
+        {revisions && <Message title={"Revisions"} revisions={revisions} />}
+        {revisedMessage && (
+          <Message title={"Revised Message"} revisedMessage={revisedMessage} />
+        )}
+      </div>
+
       <div className={styles.messageInputContainer}>
         <div className={styles.messageInputWrapper}>
           <form className={styles.messageInputInputWrapper}>
             <input
               className={styles.messageInputTopInput}
-              placeholder="Type of message"
+              placeholder="Message Type (email, article, etc.)"
               autoCorrect="off"
               spellCheck="false"
               autoCapitalize="off"
@@ -126,7 +328,7 @@ export default function Home() {
               autoCorrect="off"
               spellCheck="false"
               autoCapitalize="off"
-              rows={3}
+              rows={1}
               onChange={(e) => setUserMessage(e.target.value)}
               value={userMessage}
             />
