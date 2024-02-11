@@ -36,6 +36,7 @@ export default function Home() {
   const [originalMessage, setOriginalMessage] = useState<string>("");
   const [originalMessageType, setOriginalMessageType] = useState<string>("");
   const [revisions, setRevisions] = useState<string>("");
+  const [revisionsLoading, setRevisionsLoading] = useState<boolean>(false);
   const [revisedMessage, setRevisedMessage] = useState<string>("");
 
   const handleClick = async () => {
@@ -302,8 +303,32 @@ export default function Home() {
             </p>
           </div>
         )}
-        {revisions && <Message title={"Revisions"} revisions={revisions} />}
-        {revisedMessage && (
+        {!revisions && originalMessage ? (
+          <div className="lds-ring-container">
+            <div className="lds-ring">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <p className={styles.styleText}>Loading Revisions</p>
+          </div>
+        ) : (
+          <Message title={"Revisions"} revisions={revisions} />
+        )}
+        {!revisedMessage && !revisions && originalMessage ? (
+          <></>
+        ) : !revisedMessage && revisions && originalMessage ? (
+          <div className="lds-ring-container">
+            <div className="lds-ring">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <p className={styles.styleText}>Loading Revised Message</p>
+          </div>
+        ) : (
           <Message title={"Revised Message"} revisedMessage={revisedMessage} />
         )}
       </div>

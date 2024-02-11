@@ -20,13 +20,42 @@ const Message = ({
 }: MessageProps): JSX.Element => {
   const revisionsSections = revisions?.split(/\d+\./).filter(Boolean) || [];
 
-  const [copied, setCopied] = useState<boolean>(false);
-  const copyMessage = () => {
-    if (revisedMessage) {
-      setCopied(true);
-      navigator.clipboard.writeText(revisedMessage);
-      setTimeout(() => setCopied(false), 3000);
+  const [isCopied, setIsCopied] = useState<boolean>(false);
+
+  async function copyTextToClipboard(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (err) {
+      console.error("Unable to copy to clipboard using Clipboard API", err);
+
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+
+        return true;
+      } catch (err) {
+        console.error("Unable to copy to clipboard using execCommand", err);
+        return false;
+      }
     }
+  }
+
+  const handleCopyClick = () => {
+    copyTextToClipboard(revisedMessage).then((success) => {
+      if (success) {
+        setIsCopied(true);
+        setTimeout(() => {
+          setIsCopied(false);
+        }, 1500);
+      } else {
+        console.log("Copy to clipboard not supported on this device.");
+      }
+    });
   };
 
   return (
@@ -60,7 +89,11 @@ const Message = ({
         ) : revisedMessage ? (
           <div>
             <p>{revisedMessage}</p>
-            <div className={styles.copyButton}></div>
+            <div className={styles.copyButtonWrapper}>
+              <button onClick={handleCopyClick} className={styles.copyButton}>
+                {isCopied ? "Copied!" : "Copy Message"}
+              </button>
+            </div>
           </div>
         ) : (
           <></>

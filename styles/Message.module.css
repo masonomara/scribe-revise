@@ -72,9 +72,9 @@
   height: fit-content;
   overflow: hidden;
 }
-
-.copyButton {
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
+.copyButtonWrapper {
+  width: 100%;
+  background-color: transparent;
   height: 54px;
   text-transform: capitalize;
   font-weight: 600;
@@ -82,10 +82,38 @@
   justify-content: center;
   display: flex;
   margin-top: 19px;
-  margin-bottom: -16px;
-  padding-bottom: 2px;
+  margin-bottom: -14px;
+
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+.copyButton {
+  border: none;
+  outline: none;
+  stroke: none;
+  font-size: 17px;
+  line-height: 23px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  background-color: transparent;
+  border-radius: 10px;
+  height: 44px;
+  width: 100%;
+  transition: 100ms ease-in all;
 }
 
 .wrapper:has(.copyButton) {
   margin-bottom: 36px;
+}
+
+@media screen and (min-width: 600px) {
+  .copyButton:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: 100ms ease-out all;
+  }
+  .copyButton:active {
+    background-color: rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: 0ms ease-in all;
+  }
 }
