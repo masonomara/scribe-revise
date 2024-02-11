@@ -1,9 +1,9 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  padding: 6rem;
+  padding: 48px 0px 95px;
   min-height: 100vh;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .code {
-  font-weight: 700;
+  font-weight: 600;
   font-family: var(--font-mono);
 }
 

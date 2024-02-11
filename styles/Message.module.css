@@ -1,0 +1,69 @@
+.container {
+  width: 100%;
+  padding: 36px 16px 0px;
+  max-width: 599px;
+}
+.container p {
+  font-size: 17px;
+  line-height: 22px;
+}
+.title {
+  font-size: 33px;
+  line-height: 33px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  width: 100%;
+  padding: 0px 6px;
+}
+.wrapper {
+  border-radius: 10px;
+  background-color: rgb(235, 232, 229);
+  min-height: 20vh;
+  padding: 16px;
+}
+.revisionsSection {
+  display: grid;
+  grid-template-columns: 11px 1fr 32px;
+  flex-direction: row;
+  gap: 11px;
+  height: fit-content;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+  padding: 11px 0px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.revisionsSection:first-child {
+  padding-top: 0px;
+}
+.revisionsSection:nth-child(5) {
+  padding-bottom: 0px;
+  border-bottom: 0px solid rgba(0, 0, 0, 0.08);
+}
+.revisionsSectionNumberWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding-bottom: 2px;
+  height: 100%;
+}
+.revisionsSectionNumber {
+  font-size: 20px;
+  font-weight: 600;
+}
+.revisionsSectionDivider {
+  min-width: 2px;
+  background-color: rgba(0, 0, 0, 1);
+  flex-grow: 1;
+}
+.revisionsSectionTitle {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.revisionsSectionBody {
+  height: fit-content;
+  overflow: hidden;
+}
