@@ -21,6 +21,9 @@
   height: fit-content;
   padding: 16px;
 }
+.originalMessageType {
+  font-weight: 600;
+}
 .revisionsSection {
   display: grid;
   grid-template-columns: 11px 1fr;

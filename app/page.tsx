@@ -34,32 +34,51 @@ export default function Home() {
   const [userMessage, setUserMessage] = useState<string>("");
   const [userMessageType, setUserMessageType] = useState<string>("");
   const [originalMessage, setOriginalMessage] = useState<string>("");
+  const [originalMessageType, setOriginalMessageType] = useState<string>("");
   const [revisions, setRevisions] = useState<string>("");
   const [revisedMessage, setRevisedMessage] = useState<string>("");
 
   const handleClick = async () => {
     try {
       setUserMessage("");
+      setUserMessageType("");
+      setRevisions("");
+      setRevisedMessage("");
       setOriginalMessage(userMessage);
+      setOriginalMessageType(userMessageType);
 
-      console.log(`${userMessageType || "copy"}`);
+      console.log(
+        `revisionsInput: Write a concise list of the top 5 stylistic shortcomings of this ${
+          userMessageType || "copy"
+        }: “${userMessage}”. Return the list in the following format: 1. Example shortcoming: Shortcoming description.`
+      );
 
       const revisionsOutput = await getOpenAICompletion(
         `Write a concise list of the top 5 stylistic shortcomings of this ${
           userMessageType || "copy"
-        }: ${userMessage}. Return the list in the following format: 1. Example shortcoming: Shortcoming description.`
+        }: “${userMessage}”. Return the list in the following format: 1. Example shortcoming: Shortcoming description.`
       );
 
       setRevisions(revisionsOutput);
 
+      console.log(
+        `revisedMessageInput: I asked for a concise list of the top 5 stylistic shortcomings of this ${
+          userMessageType || "copy"
+        }: “${userMessage}”. This was your response: “${revisionsOutput}”. Can you rewrite the ${
+          userMessageType || "copy"
+        } to correct these shortcomings? Return just the rewritten ${
+          userMessageType || "copy"
+        }.`
+      );
+
       const revisedMessageOutput = await getOpenAICompletion(
         `I asked for a concise list of the top 5 stylistic shortcomings of this ${
           userMessageType || "copy"
-        }: ${userMessage}. This was your response: ${revisionsOutput}. Can you rewrite the ${
+        }: “${userMessage}”. This was your response: “${revisionsOutput}”. Can you rewrite the ${
           userMessageType || "copy"
-        } addressing these shortcomings? Return just the rewritten ${
+        } to correct these shortcomings? Return just the rewritten ${
           userMessageType || "copy"
-        }.`
+        } with no quotation marks surrounding them.`
       );
 
       setRevisedMessage(revisedMessageOutput);
@@ -71,7 +90,11 @@ export default function Home() {
   return (
     <main className={styles.main}>
       {originalMessage ? (
-        <Message title={"Original Message"} originalMessage={originalMessage} />
+        <Message
+          title={"Original Message"}
+          originalMessage={originalMessage}
+          originalMessageType={originalMessageType}
+        />
       ) : (
         <>
           <div>In the first 30 years of your life, you make your habits</div>
@@ -97,13 +120,13 @@ export default function Home() {
               value={userMessageType}
             />
             <div className={styles.messageInputInputDivider} />
-            <input
+            <textarea
               className={styles.messageInputBottomInput}
               placeholder="Message"
               autoCorrect="off"
               spellCheck="false"
               autoCapitalize="off"
-              type="text"
+              rows={3}
               onChange={(e) => setUserMessage(e.target.value)}
               value={userMessage}
             />

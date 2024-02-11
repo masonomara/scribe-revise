@@ -2,6 +2,7 @@ import styles from "../styles/Message.module.css";
 
 type MessageProps = {
   title: string;
+  originalMessageType?: string;
   originalMessage?: string;
   revisions?: string;
   revisedMessage?: string;
@@ -9,6 +10,7 @@ type MessageProps = {
 
 const Message = ({
   title,
+  originalMessageType,
   originalMessage,
   revisions,
   revisedMessage,
@@ -20,7 +22,10 @@ const Message = ({
       <div className={styles.title}>{title}</div>
       <div className={styles.wrapper}>
         {originalMessage ? (
-          <div>{originalMessage}</div>
+          <div>
+            <p className={styles.originalMessageType}>{originalMessageType}</p>
+            <p className={styles.originalMessage}>{originalMessage}</p>
+          </div>
         ) : revisions ? (
           revisionsSections.map((revision, index) => (
             <div key={index} className={styles.revisionsSection}>
@@ -41,7 +46,11 @@ const Message = ({
             </div>
           ))
         ) : revisedMessage ? (
-          <div>{revisedMessage}</div>
+          <div>
+            <p>{revisedMessage}</p>
+            <div></div>
+            <div>Copy</div>
+          </div>
         ) : (
           <></>
         )}
