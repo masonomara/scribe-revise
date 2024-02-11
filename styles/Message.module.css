@@ -18,12 +18,12 @@
 .wrapper {
   border-radius: 10px;
   background-color: rgb(235, 232, 229);
-  min-height: 20vh;
+  height: fit-content;
   padding: 16px;
 }
 .revisionsSection {
   display: grid;
-  grid-template-columns: 11px 1fr 32px;
+  grid-template-columns: 11px 1fr;
   flex-direction: row;
   gap: 11px;
   height: fit-content;

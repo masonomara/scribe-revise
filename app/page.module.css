@@ -228,3 +228,69 @@
     transform: rotate(0deg);
   }
 }
+
+
+
+.messageInputContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(222, 219, 211, 0.92);
+  backdrop-filter: blur(6px);
+  display: flex;
+  padding: 8px 0px;
+  align-items: flex-end;
+  justify-content: center;
+}
+.messageInputWrapper {
+  max-width: 599px;
+  width: 100%;
+  position: relative;
+  padding: 0px 16px;
+}
+.messageInputInputWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  outline: 0.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  overflow: hidden;
+  align-items: flex-start;
+  background-color: rgb(227, 224, 219);
+}
+.messageInputTopInput,
+.messageInputBottomInput {
+  border-radius: 0px;
+  border: none;
+  stroke: none;
+  height: 40px;
+  background-color: transparent;
+  padding: 0px 12px;
+  width: 100%;
+  font-size: 17px;
+  line-height: 23px;
+  font-family: inherit;
+  outline: none;
+}
+.messageInputTopInput {
+  font-weight: 500;
+}
+.messageInputInputDivider {
+  background-color: rgba(0, 0, 0, 0.08);
+  width: calc(100% - 18px);
+  min-height: 1px;
+  margin-left: 9px;
+}
+.messageInputArrowWrapper {
+  background-color: #000;
+  border-radius: 100px;
+  height: 28px;
+  width: 28px;
+  border: none;
+  stroke: none;
+  outline: none;
+  position: absolute;
+  right: 25px;
+  bottom: 6px;
+}

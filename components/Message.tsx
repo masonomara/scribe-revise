@@ -19,7 +19,9 @@ const Message = ({
     <div className={styles.container}>
       <div className={styles.title}>{title}</div>
       <div className={styles.wrapper}>
-        {revisions ? (
+        {originalMessage ? (
+          <div>{originalMessage}</div>
+        ) : revisions ? (
           revisionsSections.map((revision, index) => (
             <div key={index} className={styles.revisionsSection}>
               <div className={styles.revisionsSectionNumberWrapper}>
@@ -38,6 +40,8 @@ const Message = ({
               </div>
             </div>
           ))
+        ) : revisedMessage ? (
+          <div>{revisedMessage}</div>
         ) : (
           <></>
         )}

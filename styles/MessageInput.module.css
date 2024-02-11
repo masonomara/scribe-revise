@@ -1,4 +1,4 @@
-.container {
+.messageInputContainer {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -10,13 +10,13 @@
   align-items: flex-end;
   justify-content: center;
 }
-.wrapper {
+.messageInputWrapper {
   max-width: 599px;
   width: 100%;
   position: relative;
   padding: 0px 16px;
 }
-.inputWrapper {
+.messageInputInputWrapper {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -26,8 +26,8 @@
   align-items: flex-start;
   background-color: rgb(227, 224, 219);
 }
-.topInput,
-.bottomInput {
+.messageInputTopInput,
+.messageInputBottomInput {
   border-radius: 0px;
   border: none;
   stroke: none;
@@ -40,16 +40,16 @@
   font-family: inherit;
   outline: none;
 }
-.topInput {
+.messageInputTopInput {
   font-weight: 500;
 }
-.inputDivider {
+.messageInputInputDivider {
   background-color: rgba(0, 0, 0, 0.08);
   width: calc(100% - 18px);
   min-height: 1px;
   margin-left: 9px;
 }
-.arrowWrapper {
+.messageInputArrowWrapper {
   background-color: #000;
   border-radius: 100px;
   height: 28px;
