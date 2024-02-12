@@ -2,9 +2,11 @@
 
 import Message from "@/components/Message";
 import styles from "./page.module.css";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import OpenAI from "openai";
 import Image from "next/image";
+import { createClient } from "@/utils/supabase/client";
+import Link from "next/link";
 
 const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY as string;
 
@@ -38,6 +40,34 @@ export default function Home() {
   const [revisions, setRevisions] = useState<string>("");
   const [revisionsLoading, setRevisionsLoading] = useState<boolean>(false);
   const [revisedMessage, setRevisedMessage] = useState<string>("");
+  const [user, setUser] = useState<any>(null);
+
+  console.log("user", user);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const supabase = createClient();
+      const { data, error } = await supabase.auth.getUser();
+
+      setUser(data);
+      // if (error || !data?.user) {
+      //   redirect("/login");
+      // }
+    };
+
+    fetchUser();
+  }, []);
+
+  const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    const supabase = createClient();
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.log("no silly");
+    }
+    setUser(null);
+  };
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -92,6 +122,8 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <div>{user?.user?.id}</div>
+      <button onClick={handleLogout}>Sign Out</button>
       <div className={styles.messageContainer}>
         <div
           className={
@@ -371,52 +403,63 @@ export default function Home() {
       </div>
 
       <div className={styles.messageInputContainer}>
-        <div className={styles.messageInputWrapper}>
-          <form className={styles.messageInputInputWrapper} id="messageInput">
-            <input
-              className={styles.messageInputTopInput}
-              placeholder="Message Type (email, article, etc.)"
-              autoCorrect="off"
-              spellCheck="false"
-              autoCapitalize="off"
-              type="text"
-              onChange={(e) => setUserMessageType(e.target.value)}
-              value={userMessageType}
-            />
-            <div className={styles.messageInputInputDivider} />
-            <textarea
-              className={styles.messageInputBottomInput}
-              placeholder="Message"
-              autoCorrect="off"
-              spellCheck="false"
-              autoCapitalize="off"
-              rows={1}
-              onChange={(e) => setUserMessage(e.target.value)}
-              value={userMessage}
-            />
-            <button
-              id="submit-message"
-              form="messageInput"
-              className={
-                userMessage != ""
-                  ? styles.messageInputArrowWrapper
-                  : styles.messageInputArrowWrapperDisabled
-              }
-              onClick={handleClick}
-              disabled={userMessage === ""}
-            >
-              <div className={styles.messageInputButton}>
-                <Image
-                  className="arrow"
-                  src="/arrow.svg"
-                  width={18}
-                  height={18}
-                  alt="Scribe Revise"
-                />
-              </div>
-            </button>
-          </form>
-        </div>
+        {user?.user ? (
+          <div className={styles.messageInputWrapper}>
+            <form className={styles.messageInputInputWrapper} id="messageInput">
+              <input
+                className={styles.messageInputTopInput}
+                placeholder="Message Type (email, article, etc.)"
+                autoCorrect="off"
+                spellCheck="false"
+                autoCapitalize="off"
+                type="text"
+                onChange={(e) => setUserMessageType(e.target.value)}
+                value={userMessageType}
+              />
+              <div className={styles.messageInputInputDivider} />
+              <textarea
+                className={styles.messageInputBottomInput}
+                placeholder="Message"
+                autoCorrect="off"
+                spellCheck="false"
+                autoCapitalize="off"
+                rows={1}
+                onChange={(e) => setUserMessage(e.target.value)}
+                value={userMessage}
+              />
+              <button
+                id="submit-message"
+                form="messageInput"
+                className={
+                  userMessage != ""
+                    ? styles.messageInputArrowWrapper
+                    : styles.messageInputArrowWrapperDisabled
+                }
+                onClick={handleClick}
+                disabled={userMessage === ""}
+              >
+                <div className={styles.messageInputButton}>
+                  <Image
+                    className="arrow"
+                    src="/arrow.svg"
+                    width={18}
+                    height={18}
+                    alt="Scribe Revise"
+                  />
+                </div>
+              </button>
+            </form>
+          </div>
+        ) : (
+          <div className={styles.messageInputWrapper}>
+            <Link href={"/login"} className={styles.login}>
+              Log In
+            </Link>
+            <Link href={"/login"} className={styles.signUp}>
+              Sign Up
+            </Link>
+          </div>
+        )}
       </div>
     </main>
   );

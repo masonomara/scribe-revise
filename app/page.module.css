@@ -210,3 +210,9 @@
   height: fit-content;
   transform: translateY(0px);
 }
+.login {
+  width: 100%;
+}
+.signUp {
+  width: 100%;
+}
