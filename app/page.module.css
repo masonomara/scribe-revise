@@ -23,13 +23,28 @@
   border-radius: 4px;
   background: rgba(0, 0, 0, 0.05);
 }
-.emptyContainer {
+.emptyContainerOn {
   display: flex;
   padding: 36px 48px 0px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   min-height: calc(100svh - 48px - 97px);
+  pointer-events: none;
+  opacity: 1;
+  position: relative;
+  transition: opacity 100ms ease-in, all 0ms linear 100ms;
+}
+.emptyContainerOff {
+  display: flex;
+  padding: 36px 48px 0px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: calc(100svh - 48px - 97px);
+  opacity: 0;
+  position: fixed;
+  pointer-events: none;
 }
 .styleGrid {
   display: flex;
@@ -119,16 +134,16 @@
   margin-left: 9px;
 }
 .messageInputArrowWrapper {
-  background-color: #000;
+  background-color: transparent;
   border-radius: 100px;
-  height: 28px;
-  width: 28px;
+  height: 44px;
+  width: 44px;
   border: none;
   stroke: none;
   outline: none;
   position: absolute;
-  right: 25px;
-  bottom: 6px;
+  right: 17px;
+  bottom: -2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -136,21 +151,30 @@
 }
 
 .messageInputArrowWrapperDisabled {
-  background-color: #000;
+  background-color: transparent;
   opacity: 0.5;
-  border-radius: 100px;
-  height: 28px;
-  width: 28px;
+
+  height: 44px;
+  width: 44px;
   border: none;
   stroke: none;
   outline: none;
   position: absolute;
-  right: 25px;
-  bottom: 6px;
+  right: 17px;
+  bottom: -2px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: not-allowed;
+}
+.messageInputButton {
+  height: 28px;
+  width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  background-color: #000;
 }
 
 @media screen and (min-width: 600px) {
@@ -163,4 +187,26 @@
     opacity: 0.6;
     transition: 100ms ease-out all;
   }
+}
+
+.messageFadeWrapperOff {
+  opacity: 0;
+  width: 100%;
+  padding: 36px 16px 0px;
+  padding: 0px 16px 0px;
+  max-width: 599px;
+  height: fit-content;
+  height: 0px;
+  transform: translateY(32px);
+}
+
+.messageFadeWrapperOn {
+  opacity: 1;
+  width: 100%;
+  padding: 36px 16px 0px;
+  max-width: 599px;
+  transition: opacity ease-in 200ms, padding linear 0ms, height linear 0ms,
+    transform ease-in 100ms;
+  height: fit-content;
+  transform: translateY(0px);
 }

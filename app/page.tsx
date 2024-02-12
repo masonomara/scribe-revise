@@ -93,218 +93,231 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.messageContainer}>
-        {originalMessage ? (
+        <div
+          className={
+            originalMessage
+              ? `${styles.messageFadeWrapperOn}`
+              : `${styles.messageFadeWrapperOff}`
+          }
+        >
           <Message
             title={"Original Message"}
             originalMessage={originalMessage}
             originalMessageType={originalMessageType}
           />
-        ) : (
-          <div className={styles.emptyContainer}>
-            <div className={styles.styleGrid}>
-              <Image
-                src="/complete.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/scramble.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/scramble.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/scramble.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/scramble.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/scramble.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/scramble.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/scramble.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/scramble.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/scramble.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-            </div>
-            <p className={styles.styleText}>
-              Enter your message and optionally the message type for revisions.
-            </p>
-            <div className={styles.styleGridTwo}>
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-              <Image
-                src="/complete-background.svg"
-                width={15}
-                height={15}
-                alt="Scribe Revise"
-              />
-            </div>
-            <p className={styles.styleText}>
-              ScribeRevise will revise and rewrite the message for you.
-            </p>
+        </div>
+
+        <div
+          className={
+            originalMessage
+              ? `${styles.emptyContainerOff}`
+              : `${styles.emptyContainerOn}`
+          }
+        >
+          <div className={styles.styleGrid}>
+            <Image
+              src="/complete.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/scramble.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/scramble.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/scramble.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/scramble.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/scramble.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/scramble.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/scramble.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/scramble.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/scramble.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
           </div>
-        )}
+          <p className={styles.styleText}>
+            Enter your message and optionally the message type for revisions.
+          </p>
+          <div className={styles.styleGridTwo}>
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+            <Image
+              src="/complete-background.svg"
+              width={15}
+              height={15}
+              alt="Scribe Revise"
+            />
+          </div>
+          <p className={styles.styleText}>
+            ScribeRevise will revise and rewrite the message for you.
+          </p>
+        </div>
+
         {!revisions && !originalMessage ? (
           <></>
         ) : !revisions && originalMessage ? (
@@ -318,8 +331,17 @@ export default function Home() {
             <p className={styles.styleText}>Writing Revisions</p>
           </div>
         ) : (
-          <Message title={"Revisions"} revisions={revisions} />
+          <></>
         )}
+        <div
+          className={
+            revisions
+              ? `${styles.messageFadeWrapperOn}`
+              : `${styles.messageFadeWrapperOff}`
+          }
+        >
+          <Message title={"Revisions"} revisions={revisions} />
+        </div>
         {!revisedMessage && !revisions && !originalMessage ? (
           <></>
         ) : !revisedMessage && !revisions && originalMessage ? (
@@ -335,8 +357,17 @@ export default function Home() {
             <p className={styles.styleText}>Writing Revised Message</p>
           </div>
         ) : (
-          <Message title={"Revised Message"} revisedMessage={revisedMessage} />
+          <></>
         )}
+        <div
+          className={
+            revisedMessage
+              ? `${styles.messageFadeWrapperOn}`
+              : `${styles.messageFadeWrapperOff}`
+          }
+        >
+          <Message title={"Revised Message"} revisedMessage={revisedMessage} />
+        </div>
       </div>
 
       <div className={styles.messageInputContainer}>
@@ -374,13 +405,15 @@ export default function Home() {
               onClick={handleClick}
               disabled={userMessage === ""}
             >
-              <Image
-                className="arrow"
-                src="/arrow.svg"
-                width={18}
-                height={18}
-                alt="Scribe Revise"
-              />
+              <div className={styles.messageInputButton}>
+                <Image
+                  className="arrow"
+                  src="/arrow.svg"
+                  width={18}
+                  height={18}
+                  alt="Scribe Revise"
+                />
+              </div>
             </button>
           </form>
         </div>

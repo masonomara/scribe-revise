@@ -1,7 +1,5 @@
 .container {
   width: 100%;
-  padding: 36px 16px 0px;
-  max-width: 599px;
 }
 .container p {
   font-size: 17px;
@@ -99,6 +97,7 @@
   height: 44px;
   width: 100%;
   transition: 100ms ease-in all;
+  color: rgba(0, 0, 0, 1);
 }
 
 .wrapper:has(.copyButton) {
