@@ -122,8 +122,11 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <div>{user?.user?.id}</div>
-      <button onClick={handleLogout}>Sign Out</button>
+      <div className={styles.sidebar}>
+        <div>{user?.user?.id}</div>
+        <button onClick={handleLogout}>Sign Out</button>
+      </div>
+
       <div className={styles.messageContainer}>
         <div
           className={
