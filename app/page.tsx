@@ -39,7 +39,9 @@ export default function Home() {
   const [revisionsLoading, setRevisionsLoading] = useState<boolean>(false);
   const [revisedMessage, setRevisedMessage] = useState<string>("");
 
-  const handleClick = async () => {
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
     try {
       setUserMessage("");
       setUserMessageType("");
@@ -303,7 +305,9 @@ export default function Home() {
             </p>
           </div>
         )}
-        {!revisions && originalMessage ? (
+        {!revisions && !originalMessage ? (
+          <></>
+        ) : !revisions && originalMessage ? (
           <div className="lds-ring-container">
             <div className="lds-ring">
               <div></div>
@@ -311,12 +315,14 @@ export default function Home() {
               <div></div>
               <div></div>
             </div>
-            <p className={styles.styleText}>Loading Revisions</p>
+            <p className={styles.styleText}>Writing Revisions</p>
           </div>
         ) : (
           <Message title={"Revisions"} revisions={revisions} />
         )}
-        {!revisedMessage && !revisions && originalMessage ? (
+        {!revisedMessage && !revisions && !originalMessage ? (
+          <></>
+        ) : !revisedMessage && !revisions && originalMessage ? (
           <></>
         ) : !revisedMessage && revisions && originalMessage ? (
           <div className="lds-ring-container">
@@ -326,7 +332,7 @@ export default function Home() {
               <div></div>
               <div></div>
             </div>
-            <p className={styles.styleText}>Loading Revised Message</p>
+            <p className={styles.styleText}>Writing Revised Message</p>
           </div>
         ) : (
           <Message title={"Revised Message"} revisedMessage={revisedMessage} />
@@ -335,7 +341,7 @@ export default function Home() {
 
       <div className={styles.messageInputContainer}>
         <div className={styles.messageInputWrapper}>
-          <form className={styles.messageInputInputWrapper}>
+          <form className={styles.messageInputInputWrapper} id="messageInput">
             <input
               className={styles.messageInputTopInput}
               placeholder="Message Type (email, article, etc.)"
@@ -357,15 +363,26 @@ export default function Home() {
               onChange={(e) => setUserMessage(e.target.value)}
               value={userMessage}
             />
+            <button
+              id="submit-message"
+              form="messageInput"
+              className={
+                userMessage != ""
+                  ? styles.messageInputArrowWrapper
+                  : styles.messageInputArrowWrapperDisabled
+              }
+              onClick={handleClick}
+              disabled={userMessage === ""}
+            >
+              <Image
+                className="arrow"
+                src="/arrow.svg"
+                width={18}
+                height={18}
+                alt="Scribe Revise"
+              />
+            </button>
           </form>
-
-          <button
-            id="submit-message"
-            className={styles.messageInputArrowWrapper}
-            onClick={handleClick}
-          >
-            <div className="arrow"></div>
-          </button>
         </div>
       </div>
     </main>

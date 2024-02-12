@@ -103,10 +103,14 @@
 }
 .messageInputBottomInput {
   margin: 3px 0px 8.5px;
-  padding: 5.5px 12px 0px;
+  padding: 5.5px 56px 0px 12px;
   height: fit-content;
   min-height: 28.5px;
   max-height: 74.5px;
+}
+
+.messageInputBottomInput::-webkit-scrollbar {
+  display: none;
 }
 .messageInputInputDivider {
   background-color: rgba(0, 0, 0, 0.08);
@@ -125,4 +129,38 @@
   position: absolute;
   right: 25px;
   bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.messageInputArrowWrapperDisabled {
+  background-color: #000;
+  opacity: 0.5;
+  border-radius: 100px;
+  height: 28px;
+  width: 28px;
+  border: none;
+  stroke: none;
+  outline: none;
+  position: absolute;
+  right: 25px;
+  bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: not-allowed;
+}
+
+@media screen and (min-width: 600px) {
+  .messageInputArrowWrapper:hover img {
+    opacity: 0.87;
+    transition: 100ms ease-out all;
+  }
+
+  .messageInputArrowWrapper:active img {
+    opacity: 0.6;
+    transition: 100ms ease-out all;
+  }
 }
