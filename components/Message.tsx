@@ -46,16 +46,18 @@ const Message = ({
   }
 
   const handleCopyClick = () => {
-    copyTextToClipboard(revisedMessage).then((success) => {
-      if (success) {
-        setIsCopied(true);
-        setTimeout(() => {
-          setIsCopied(false);
-        }, 1500);
-      } else {
-        console.log("Copy to clipboard not supported on this device.");
-      }
-    });
+    if (revisedMessage) {
+      copyTextToClipboard(revisedMessage).then((success) => {
+        if (success) {
+          setIsCopied(true);
+          setTimeout(() => {
+            setIsCopied(false);
+          }, 1500);
+        } else {
+          console.log("Copy to clipboard not supported on this device.");
+        }
+      });
+    }
   };
 
   return (
