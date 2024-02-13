@@ -124,6 +124,7 @@ export default function Home() {
       setRevisedMessage(message.revisedMessage);
       setOriginalMessage(message.originalMessage);
       setOriginalMessageType(message.originalMessageType);
+      setMenuOpen(false);
     } catch (e) {
       console.error("Error handling click:", e);
     }
@@ -216,6 +217,7 @@ export default function Home() {
                   setOriginalMessage("");
                   setRevisions("");
                   setRevisedMessage("");
+                  setMenuOpen(false);
                 }}
               >
                 New Message
