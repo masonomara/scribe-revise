@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import OpenAI from "openai";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
-import Link from "next/link";
 import { login, signup } from "./auth/actions";
 
 const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY as string;
@@ -43,8 +42,26 @@ export default function Home() {
   const [revisedMessage, setRevisedMessage] = useState<string>("");
   const [user, setUser] = useState<any>(null);
 
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [passwordsMatch, setPasswordsMatch] = useState<boolean>(false);
+
   const [messageHistory, setMessageHistory] = useState<any[]>([]);
   const [signUp, setSignUp] = useState<boolean>(false);
+
+  const [logIn, setLogIn] = useState<boolean>(false);
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+    setPasswordsMatch(e.target.value === confirmPassword);
+  };
+
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setConfirmPassword(e.target.value);
+    setPasswordsMatch(e.target.value === password);
+  };
 
   const formatDate = (published: any): string => {
     const options: Intl.DateTimeFormatOptions = {
@@ -295,14 +312,56 @@ export default function Home() {
                 spellCheck="false"
                 autoCapitalize="off"
                 className={styles.signUpInput}
+                onChange={handlePasswordChange}
               />
-              <div className={styles.signUpButtons}>
-                <button formAction={signup} className={styles.signUpSignUp}>
-                  Sign up
-                </button>
-                <button formAction={login} className={styles.signUpLogin}>
+              {!logIn && (
+                <>
+                  <label
+                    htmlFor="confirmpassword"
+                    className={styles.signUpLabel}
+                  >
+                    Confirm Password:
+                  </label>
+                  <input
+                    id="confirmpassword"
+                    name="confirmpassword"
+                    type="password"
+                    required
+                    autoCorrect="off"
+                    spellCheck="false"
+                    autoCapitalize="off"
+                    className={styles.signUpInput}
+                    onChange={handleConfirmPasswordChange}
+                  />
+                </>
+              )}
+
+              {/* <button formAction={login} className={styles.signUpLogin}>
                   Log in
-                </button>
+                </button> */}
+
+              <div
+                className={`${styles.signUpButtons} ${
+                  passwordsMatch ? "" : styles.signUpButtonsDisabled
+                }`}
+              >
+                {logIn ? (
+                  <button formAction={login} className={styles.signUpLogin}>
+                    Log In
+                  </button>
+                ) : (
+                  <button formAction={signup} className={styles.signUpLogin}>
+                    Sign up
+                  </button>
+                )}
+              </div>
+              <div
+                onClick={() => {
+                  setLogIn(true);
+                  setPasswordsMatch(true);
+                }}
+              >
+                Already have an account? Log in here.
               </div>
             </form>
           </div>

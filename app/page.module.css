@@ -28,23 +28,26 @@
   font-size: 33px;
   line-height: 33px;
   font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: 24px;
 }
 .signUpForm {
   display: flex;
-  padding: 36px 48px 0px;
+  padding: 36px 0px 0px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   min-height: calc(100dvh - 48px - 97px);
   opacity: 1;
   position: relative;
+  width: 100%;
   transition: opacity 100ms ease-in, all 0ms linear 100ms;
 }
 
 .signUpFormWrapper {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 280px;
 }
 .signUpButtons {
   display: flex;
@@ -52,10 +55,15 @@
   gap: 8px;
   width: 100%;
   flex-wrap: wrap;
-  margin-top: 12px;
+  margin-top: 20px;
   padding-bottom: 36px;
   align-items: center;
   justify-content: center;
+}
+.signUpButtonsDisabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.4;
 }
 .getStartedButton {
   outline: none;
@@ -134,6 +142,8 @@
   padding: 12px;
   font-size: 17px;
   margin-bottom: 12px;
+  width: 100%;
+  max-width: 280px;
 }
 .signUpLabel {
   font-size: 14px;
