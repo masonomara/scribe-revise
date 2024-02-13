@@ -7,6 +7,8 @@ import OpenAI from "openai";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
 import { login, signup } from "./auth/actions";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY as string;
 
@@ -50,6 +52,8 @@ export default function Home() {
   const [signUp, setSignUp] = useState<boolean>(false);
 
   const [logIn, setLogIn] = useState<boolean>(false);
+
+  console.log("user:", user);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -120,19 +124,31 @@ export default function Home() {
 
   const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setUserMessage("");
-    setUserMessageType("");
-    setRevisions("");
-    setRevisedMessage("");
-    setOriginalMessage("");
-    setOriginalMessageType("s");
-
+    const router = useRouter();
     const supabase = createClient();
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.log("no silly");
+
+    try {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        console.error("Error during logout:", error);
+      } else {
+        setUser(null);
+        setUserMessage("");
+        setUserMessageType("");
+        setRevisions("");
+        setRevisedMessage("");
+        setOriginalMessage("");
+        setOriginalMessageType("");
+
+        // Introduce a slight delay before redirecting
+        setTimeout(() => {
+          router.push("/login");
+        }, 100);
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
     }
-    setUser(null);
   };
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -258,9 +274,14 @@ export default function Home() {
             </div>
 
             <div className={styles.signOutButtonWrapper}>
-              <button onClick={handleLogout} className={styles.signOutButton}>
+              <Link
+                href={"/login"}
+                target="_top"
+                // onClick={handleLogout}
+                className={styles.signOutButton}
+              >
                 Log Out
-              </button>
+              </Link>
             </div>
           </>
         ) : (
@@ -631,7 +652,9 @@ export default function Home() {
       </div>
 
       <div className={styles.messageInputContainer}>
-        {user?.user ? (
+        {!user ? (
+          <></>
+        ) : user?.user?.id ? (
           <div className={styles.messageInputWrapper}>
             <form className={styles.messageInputInputWrapper} id="messageInput">
               <input
@@ -680,14 +703,13 @@ export default function Home() {
           </div>
         ) : (
           <div className={styles.messageInputWrapper}>
-            <div
-              onClick={() => setSignUp(!signUp)}
-              className={
-                signUp ? styles.exitStartedButton : styles.getStartedButton
-              }
+            <Link
+              href={"/login"}
+              target={"_top"}
+              className={styles.getStartedButton}
             >
-              {signUp ? "Exit" : "Get Started"}
-            </div>
+              Get Started
+            </Link>
           </div>
         )}
       </div>

@@ -398,6 +398,24 @@
   width: 100%;
   transition: 100ms ease-in all;
   color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logInSecondaryButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  opacity: 0.87;
+  transition: 100ms ease-out all;
+  cursor: pointer;
 }
 .sidebar {
   position: fixed;
@@ -574,5 +592,13 @@
     background-color: rgba(0, 0, 0, 0.08);
     cursor: pointer;
     transition: 0ms ease-in all;
+  }
+  .logInSecondaryButton:hover {
+    opacity: 0.6;
+    transition: 100ms ease-in all;
+  }
+  .logInSecondaryButton:active {
+    opacity: 0.5;
+    transition: 100ms ease-in all;
   }
 }
