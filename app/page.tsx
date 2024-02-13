@@ -96,6 +96,12 @@ export default function Home() {
 
   const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setUserMessage("");
+    setUserMessageType("");
+    setRevisions("");
+    setRevisedMessage("");
+    setOriginalMessage("");
+    setOriginalMessageType("s");
 
     const supabase = createClient();
     const { error } = await supabase.auth.signOut();
