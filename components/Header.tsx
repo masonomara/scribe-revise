@@ -7,7 +7,6 @@ const Header = () => {
   return (
     <div className={styles.container}>
       <h1>ScribeRevise</h1>
-      {/* <div className={styles.menuBackground}  /> */}
     </div>
   );
 };

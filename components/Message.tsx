@@ -54,7 +54,6 @@ const Message = ({
             setIsCopied(false);
           }, 1500);
         } else {
-          console.log("Copy to clipboard not supported on this device.");
         }
       });
     }

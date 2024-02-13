@@ -25,7 +25,7 @@ async function getOpenAICompletion(systemPrompt: string): Promise<string> {
     });
 
     const output = response.choices[0]?.message?.content?.trim() ?? "";
-    console.log("OpenAI Output:\n", output);
+
     return output;
   } catch (e) {
     console.error("Error getting OpenAI completion:", e);
@@ -51,8 +51,6 @@ export default function Home() {
   const [signUp, setSignUp] = useState<boolean>(false);
 
   const [logIn, setLogIn] = useState<boolean>(false);
-
-  console.log("user:", user);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -83,7 +81,6 @@ export default function Home() {
       try {
         const supabase = createClient();
         if (user?.user?.id) {
-          console.log("beginning to fetch feeds with", user?.user?.email);
           const { data, error } = await supabase
             .from("messages")
             .select("*")
@@ -92,8 +89,6 @@ export default function Home() {
           if (error) {
             console.error("Error fetching user messages 1:", error);
           } else {
-            console.log("fetched messages:", data);
-
             const sortedMessages = data.sort(
               (a, b) =>
                 new Date(b.created_at).getTime() -
@@ -123,7 +118,7 @@ export default function Home() {
 
   const handleSetMessage = async (e: React.MouseEvent<any>, message: any) => {
     e.preventDefault();
-    console.log("nut");
+
     try {
       setRevisions(message.revisions);
       setRevisedMessage(message.revisedMessage);
@@ -145,12 +140,6 @@ export default function Home() {
       setOriginalMessage(userMessage);
       setOriginalMessageType(userMessageType);
 
-      console.log(
-        `revisionsInput: Write a concise list of the top 5 stylistic shortcomings of this ${
-          userMessageType || "copy"
-        }: “${userMessage}”. Return the list in the following format: 1. Example shortcoming: Shortcoming description.`
-      );
-
       const revisionsOutput = await getOpenAICompletion(
         `Write a concise list of the top 5 stylistic shortcomings of this ${
           userMessageType || "copy"
@@ -158,16 +147,6 @@ export default function Home() {
       );
 
       setRevisions(revisionsOutput);
-
-      console.log(
-        `revisedMessageInput: I asked for a concise list of the top 5 stylistic shortcomings of this ${
-          userMessageType || "copy"
-        }: “${userMessage}”. This was your response: “${revisionsOutput}”. Can you rewrite the ${
-          userMessageType || "copy"
-        } to correct these shortcomings? Return just the rewritten ${
-          userMessageType || "copy"
-        } with no quotation marks surrounding them`
-      );
 
       const revisedMessageOutput = await getOpenAICompletion(
         `I asked for a concise list of the top 5 stylistic shortcomings of this ${
@@ -198,8 +177,6 @@ export default function Home() {
 
       if (error) {
         console.error("Error inserting data into Supabase:", error);
-      } else {
-        console.log("Data inserted successfully:", data);
       }
     } catch (e) {
       console.error("Error handling click:", e);
@@ -249,7 +226,6 @@ export default function Home() {
                   onClick={(e) => handleSetMessage(e, message)}
                 >
                   <div className={styles.messageItem}>
-                    {/* Render each message item here */}
                     <div className={styles.messageItemText}>
                       <div className={styles.messageItemHeadWrapper}>
                         <p className={styles.messageItemHeader}>
@@ -352,10 +328,6 @@ export default function Home() {
                   />
                 </>
               )}
-
-              {/* <button formAction={login} className={styles.signUpLogin}>
-                  Log in
-                </button> */}
 
               <div
                 className={`${styles.signUpButtons} ${
