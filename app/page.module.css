@@ -24,6 +24,119 @@
   border-radius: 4px;
   background: rgba(0, 0, 0, 0.05);
 }
+.signUpFormTitle {
+  font-size: 33px;
+  line-height: 33px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.signUpForm {
+  display: flex;
+  padding: 36px 48px 0px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: calc(100dvh - 48px - 97px);
+  opacity: 1;
+  position: relative;
+  transition: opacity 100ms ease-in, all 0ms linear 100ms;
+}
+
+.signUpFormWrapper {
+  display: flex;
+  flex-direction: column;
+}
+.signUpButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  width: 100%;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  padding-bottom: 36px;
+}
+.getStartedButton {
+  outline: none;
+  stroke: none;
+  border: none;
+  cursor: pointer;
+  transition: 100ms ease-out all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  width: 240px;
+  border-radius: 18px;
+  background-color: rgba(0, 0, 0, 1);
+  outline: none;
+  stroke: none;
+  font-size: 17px;
+  line-height: 17px;
+  font-weight: 600;
+  color: rgb(222, 219, 211);
+}
+.exitStartedButton {
+  border-radius: 18px;
+  cursor: pointer;
+  transition: 100ms ease-out all;
+  display: flex;
+  height: 56px;
+  width: 240px;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  font-size: 17px;
+  line-height: 17px;
+  font-weight: 600;
+}
+.signUpSignUp,
+.signUpLogin {
+  height: 48px;
+  width: 180px;
+  border-radius: 18px;
+  border: 1.5px solid rgba(0, 0, 0, 1);
+  outline: none;
+  stroke: none;
+  font-size: 17px;
+  line-height: 17px;
+  font-weight: 600;
+  background: transparent;
+  cursor: pointer;
+  transition: 100ms ease-out all;
+}
+.signUpLogin {
+  height: 48px;
+  width: 180px;
+  border-radius: 18px;
+  background-color: rgba(0, 0, 0, 1);
+  outline: none;
+  stroke: none;
+  font-size: 17px;
+  line-height: 17px;
+  font-weight: 600;
+  color: rgb(222, 219, 211);
+}
+.signUpInput {
+  background-color: rgb(227, 224, 219);
+  border: none;
+  stroke: none;
+  outline: none;
+  outline: 0.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  overflow: hidden;
+  align-items: flex-start;
+  background-color: rgb(227, 224, 219);
+  height: 44px;
+  padding: 12px;
+  font-size: 17px;
+  margin-bottom: 12px;
+}
+.signUpLabel {
+  font-size: 14px;
+  line-height: 14px;
+  margin-bottom: 6px;
+  color: rgb(0, 0, 0);
+}
 .emptyContainerOn {
   display: flex;
   padding: 36px 48px 0px;
@@ -90,6 +203,9 @@
   width: 100%;
   position: relative;
   padding: 0px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .messageInputInputWrapper {
   display: flex;
@@ -187,7 +303,27 @@
 
   .messageInputArrowWrapper:active img {
     opacity: 0.6;
-    transition: 100ms ease-out all;
+    transition: 100ms ease-in all;
+  }
+
+  .signUpLogin:hover,
+  .getStartedButton:hover {
+    opacity: 0.87;
+    transition: 100ms ease-in opacity;
+  }
+
+  .signUpLogin:active,
+  .getStartedButton:active {
+    opacity: 0.75;
+    transition: 100ms ease-in opacity;
+  }
+  .signUpSignUp:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: 100ms ease-in all;
+  }
+  .signUpSignUp:active {
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: 100ms ease-in all;
   }
 }
 

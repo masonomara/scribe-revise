@@ -1,6 +1,6 @@
 "use client";
 
-import { login, signup } from "./actions";
+import { login, signup } from "../auth/actions";
 import styles from "../page.module.css";
 import { createClient } from "@/utils/supabase/client";
 

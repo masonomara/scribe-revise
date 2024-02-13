@@ -7,6 +7,7 @@ import OpenAI from "openai";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
 import Link from "next/link";
+import { login, signup } from "./auth/actions";
 
 const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY as string;
 
@@ -43,6 +44,7 @@ export default function Home() {
   const [user, setUser] = useState<any>(null);
 
   const [messageHistory, setMessageHistory] = useState<any[]>([]);
+  const [signUp, setSignUp] = useState<boolean>(false);
 
   const formatDate = (published: any): string => {
     const options: Intl.DateTimeFormatOptions = {
@@ -60,17 +62,25 @@ export default function Home() {
     const fetchUserMessages = async () => {
       try {
         const supabase = createClient();
-        console.log(user?.user?.id);
-        const { data, error } = await supabase
-          .from("messages")
-          .select("*")
-          .eq("userId", user?.user?.id);
+        if (user?.user?.id) {
+          console.log("beginning to fetch feeds with", user?.user?.email);
+          const { data, error } = await supabase
+            .from("messages")
+            .select("*")
+            .eq("userId", user?.user?.id);
 
-        if (error) {
-          console.error("Error fetching user messages 1:", error);
-        } else {
-          console.log("fetched messages:", data);
-          setMessageHistory(data || []);
+          if (error) {
+            console.error("Error fetching user messages 1:", error);
+          } else {
+            console.log("fetched messages:", data);
+
+            const sortedMessages = data.sort(
+              (a, b) =>
+                new Date(b.created_at).getTime() -
+                new Date(a.created_at).getTime()
+            );
+            setMessageHistory(sortedMessages || []);
+          }
         }
       } catch (e) {
         console.error("Error fetching user messages 2:", e);
@@ -86,9 +96,6 @@ export default function Home() {
       const { data, error } = await supabase.auth.getUser();
 
       setUser(data);
-      // if (error || !data?.user) {
-      //   redirect("/login");
-      // }
     };
 
     fetchUser();
@@ -175,7 +182,6 @@ export default function Home() {
 
       if (error) {
         console.error("Error inserting data into Supabase:", error);
-        // Handle the error or log it
       } else {
         console.log("Data inserted successfully:", data);
       }
@@ -208,35 +214,38 @@ export default function Home() {
             <p className={styles.menuEmail}>Message History</p>
           </div>
         </div>
-        <div className={styles.messageItemContainer}>
-          {messageHistory.map((message) => (
-            <>
-              <div key={message.id} className={styles.messageItem}>
-                {/* Render each message item here */}
-                <div className={styles.messageItemText}>
-                  <div className={styles.messageItemHeadWrapper}>
-                    <p className={styles.messageItemHeader}>
-                      {message.originalMessageType}
-                    </p>
-                    <p className={styles.messageItemDate}>
-                      {formatDate(message.created_at)}
-                    </p>
-                  </div>
-                  <p className={styles.messageItemBody}>
-                    {message.revisedMessage}
-                  </p>
-                </div>
-              </div>
-              <div className={styles.messageItemBorder} />
-            </>
-          ))}
-        </div>{" "}
         {user?.user ? (
-          <div className={styles.signOutButtonWrapper}>
-            <button onClick={handleLogout} className={styles.signOutButton}>
-              Log Out
-            </button>
-          </div>
+          <>
+            <div className={styles.messageItemContainer}>
+              {messageHistory.map((message) => (
+                <div key={message.id}>
+                  <div className={styles.messageItem}>
+                    {/* Render each message item here */}
+                    <div className={styles.messageItemText}>
+                      <div className={styles.messageItemHeadWrapper}>
+                        <p className={styles.messageItemHeader}>
+                          {message.originalMessageType}
+                        </p>
+                        <p className={styles.messageItemDate}>
+                          {formatDate(message.created_at)}
+                        </p>
+                      </div>
+                      <p className={styles.messageItemBody}>
+                        {message.revisedMessage}
+                      </p>
+                    </div>
+                  </div>
+                  <div className={styles.messageItemBorder} />
+                </div>
+              ))}
+            </div>
+
+            <div className={styles.signOutButtonWrapper}>
+              <button onClick={handleLogout} className={styles.signOutButton}>
+                Log Out
+              </button>
+            </div>
+          </>
         ) : (
           <></>
         )}
@@ -256,217 +265,259 @@ export default function Home() {
             originalMessageType={originalMessageType}
           />
         </div>
+        {signUp ? (
+          <div className={styles.signUpForm}>
+            <p className={styles.signUpFormTitle}>Get Started</p>
 
-        <div
-          className={
-            originalMessage
-              ? `${styles.emptyContainerOff}`
-              : `${styles.emptyContainerOn}`
-          }
-        >
-          <div className={styles.styleGrid}>
-            <Image
-              src="/complete.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/scramble.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/scramble.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/scramble.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/scramble.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/scramble.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/scramble.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/scramble.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/scramble.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/scramble.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
+            <form className={styles.signUpFormWrapper}>
+              <label htmlFor="email" className={styles.signUpLabel}>
+                Email:
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                autoCorrect="off"
+                spellCheck="false"
+                autoCapitalize="off"
+                className={styles.signUpInput}
+              />
+              <label htmlFor="password" className={styles.signUpLabel}>
+                Password:
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                autoCorrect="off"
+                spellCheck="false"
+                autoCapitalize="off"
+                className={styles.signUpInput}
+              />
+              <div className={styles.signUpButtons}>
+                <button formAction={signup} className={styles.signUpSignUp}>
+                  Sign up
+                </button>
+                <button formAction={login} className={styles.signUpLogin}>
+                  Log in
+                </button>
+              </div>
+            </form>
           </div>
-          <p className={styles.styleText}>
-            Enter your message and optionally the message type for revisions.
-          </p>
-          <div className={styles.styleGridTwo}>
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
-            <Image
-              src="/complete-background.svg"
-              width={15}
-              height={15}
-              alt="Scribe Revise"
-            />
+        ) : (
+          <div
+            className={
+              originalMessage
+                ? `${styles.emptyContainerOff}`
+                : `${styles.emptyContainerOn}`
+            }
+          >
+            <div className={styles.styleGrid}>
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/scramble.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+            </div>
+            <p className={styles.styleText}>
+              Enter your message and optionally the message type for revisions.
+            </p>
+            <div className={styles.styleGridTwo}>
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+              <Image
+                src="/complete-background.svg"
+                width={15}
+                height={15}
+                alt="Scribe Revise"
+              />
+            </div>
+            <p className={styles.styleText}>
+              ScribeRevise will revise and rewrite the message for you.
+            </p>
           </div>
-          <p className={styles.styleText}>
-            ScribeRevise will revise and rewrite the message for you.
-          </p>
-        </div>
+        )}
 
         {!revisions && !originalMessage ? (
           <></>
@@ -570,12 +621,14 @@ export default function Home() {
           </div>
         ) : (
           <div className={styles.messageInputWrapper}>
-            <Link href={"/login"} className={styles.login}>
-              Log In
-            </Link>
-            <Link href={"/login"} className={styles.signUp}>
-              Sign Up
-            </Link>
+            <div
+              onClick={() => setSignUp(!signUp)}
+              className={
+                signUp ? styles.exitStartedButton : styles.getStartedButton
+              }
+            >
+              {signUp ? "Exit" : "Get Started"}
+            </div>
           </div>
         )}
       </div>
