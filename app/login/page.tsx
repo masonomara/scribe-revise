@@ -43,7 +43,7 @@ export default function LoginPage() {
             className={styles.closeMenuWrapper}
             onClick={() => setMenuOpen(false)}
           >
-            <Image src="/menu.svg" width={22} height={22} alt="Menu" />
+            <Image src="/close.svg" width={22} height={22} alt="Menu" />
           </div>
           <div className={styles.menuEmailWrapper}>
             <p className={styles.menuEmail}>Message History</p>

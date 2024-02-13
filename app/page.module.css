@@ -417,6 +417,17 @@
   transition: 100ms ease-out all;
   cursor: pointer;
 }
+.messageButtonBlank {
+  border: none;
+  stroke: none;
+  outline: none;
+  background: transparent;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  width: 100%;
+}
 .sidebar {
   position: fixed;
   left: -280px;
@@ -511,8 +522,34 @@
   position: relative;
   border-radius: 10px;
   padding: 6px;
+  border: none;
+  stroke: none;
+  outline: none;
+  background: transparent;
 }
-
+.messageItemNew {
+  min-height: 56px;
+  height: 56px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 20px;
+  position: relative;
+  border-radius: 10px;
+  padding: 6px;
+  border: none;
+  stroke: none;
+  outline: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  font-size: 17px;
+  line-height: 23px;
+  font-weight: 600;
+  transition: 100ms ease-out all;
+  letter-spacing: -0.01em;
+}
 .messageItemText {
   position: relative;
   min-height: 60px;
@@ -600,5 +637,15 @@
   .logInSecondaryButton:active {
     opacity: 0.5;
     transition: 100ms ease-in all;
+  }
+  .messageItemNew:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: 0ms ease-in all;
+  }
+  .messageItemNew:active {
+    background-color: rgba(0, 0, 0, 0.11);
+    cursor: pointer;
+    transition: 0ms ease-in all;
   }
 }

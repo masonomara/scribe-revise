@@ -8,7 +8,6 @@ import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
 import { login, signup } from "./auth/actions";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY as string;
 
@@ -122,32 +121,16 @@ export default function Home() {
     fetchUser();
   }, []);
 
-  const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSetMessage = async (e: React.MouseEvent<any>, message: any) => {
     e.preventDefault();
-    const router = useRouter();
-    const supabase = createClient();
-
+    console.log("nut");
     try {
-      const { error } = await supabase.auth.signOut();
-
-      if (error) {
-        console.error("Error during logout:", error);
-      } else {
-        setUser(null);
-        setUserMessage("");
-        setUserMessageType("");
-        setRevisions("");
-        setRevisedMessage("");
-        setOriginalMessage("");
-        setOriginalMessageType("");
-
-        // Introduce a slight delay before redirecting
-        setTimeout(() => {
-          router.push("/login");
-        }, 100);
-      }
-    } catch (error) {
-      console.error("Error during logout:", error);
+      setRevisions(message.revisions);
+      setRevisedMessage(message.revisedMessage);
+      setOriginalMessage(message.originalMessage);
+      setOriginalMessageType(message.originalMessageType);
+    } catch (e) {
+      console.error("Error handling click:", e);
     }
   };
 
@@ -241,7 +224,7 @@ export default function Home() {
             className={styles.closeMenuWrapper}
             onClick={() => setMenuOpen(false)}
           >
-            <Image src="/menu.svg" width={22} height={22} alt="Menu" />
+            <Image src="/close.svg" width={22} height={22} alt="Menu" />
           </div>
           <div className={styles.menuEmailWrapper}>
             <p className={styles.menuEmail}>Message History</p>
@@ -250,8 +233,21 @@ export default function Home() {
         {user?.user ? (
           <>
             <div className={styles.messageItemContainer}>
+              <div
+                className={styles.messageItemNew}
+                onClick={() => {
+                  setOriginalMessage("");
+                  setRevisions("");
+                  setRevisedMessage("");
+                }}
+              >
+                New Message
+              </div>
               {messageHistory.map((message) => (
-                <div key={message.id}>
+                <div
+                  key={message.id}
+                  onClick={(e) => handleSetMessage(e, message)}
+                >
                   <div className={styles.messageItem}>
                     {/* Render each message item here */}
                     <div className={styles.messageItemText}>
