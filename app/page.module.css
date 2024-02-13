@@ -5,18 +5,8 @@
   align-items: center;
   padding: 48px 0px 0px;
   max-height: 100dvh;
-  margin-left: 280px;
 }
-.sidebar {
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  height: calc(100dvh);
-  width: 280px;
-  z-index: 10000;
-  background-color: rgb(207, 204, 196);
-  border-right: 0.5px solid rgba(0, 0, 0, 0.08);
-}
+
 .messageContainer {
   overflow-y: scroll;
   width: 100%;
@@ -229,4 +219,211 @@
 }
 .signUp {
   width: 100%;
+}
+
+.signOutButtonWrapper {
+  width: 100%;
+  background-color: transparent;
+  height: 54px;
+  text-transform: capitalize;
+  font-weight: 600;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-top: 19px;
+  margin-bottom: -14px;
+
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+.signOutButton {
+  border: none;
+  outline: none;
+  stroke: none;
+  font-size: 17px;
+  line-height: 23px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  background-color: transparent;
+  border-radius: 10px;
+  height: 44px;
+  width: 100%;
+  transition: 100ms ease-in all;
+  color: rgba(0, 0, 0, 0.6);
+}
+.sidebar {
+  position: fixed;
+  left: -280px;
+  top: 0px;
+  height: calc(100dvh);
+  width: 280px;
+  z-index: 10000;
+  background-color: rgb(207, 204, 196);
+  border-right: 0.5px solid rgba(0, 0, 0, 0.08);
+  /* padding: 2px 16px 24px; */
+  transition: 100ms ease-out all;
+}
+.sidebarForceOpen {
+  left: 0px;
+  transition: 150ms ease-in all;
+}
+.sidebarHeader {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+  padding-bottom: 2px;
+  margin-left: 16px;
+  margin-right: 16px;
+  overflow: hidden;
+  height: 48px;
+}
+.menuWrapper {
+  height: 44px;
+  width: 44px;
+  position: fixed;
+  top: 2px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menuEmailWrapper {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-right: 44px;
+}
+.menuEmailHeader {
+  font-size: 12px;
+  line-height: 14px;
+  opacity: 0.6;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.menuEmail {
+  font-size: 17px;
+  line-height: 23px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.closeMenuWrapper {
+  height: 44px;
+  width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.messageItemContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0px;
+  gap: 8px;
+  height: calc(100% - 48px - 54px);
+  overflow-x: hidden;
+  padding: 10px;
+}
+.messageItemContainer::-webkit-scrollbar {
+  width: 8px;
+}
+.messageItemContainer::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.05);
+}
+.messageItem {
+  min-height: 72px;
+  height: 72px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 20px;
+  position: relative;
+  border-radius: 10px;
+  padding: 6px;
+}
+
+.messageItemText {
+  position: relative;
+  min-height: 60px;
+  height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
+}
+.messageItemBody {
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
+  overflow: hidden;
+  height: 40px;
+}
+.messageItemHeadWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 5px;
+  justify-content: flex-start;
+  align-items: center;
+  height: 20px;
+  overflow: hidden;
+}
+.messageItemHeader {
+  font-weight: 500;
+  white-space: nowrap;
+  width: 100%;
+}
+.messageItemDate {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 19px;
+  letter-spacing: -0.04em;
+  opacity: 0.4;
+}
+.messageItemBorder {
+  min-height: 0.5px;
+  height: 0.5px;
+  margin-top: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+@media screen and (min-width: 800px) {
+  .sidebar {
+    left: 0px;
+  }
+  .main {
+    margin-left: 280px;
+  }
+  .closeMenuWrapper {
+    display: none;
+  }
+  .menuEmailWrapper {
+    align-items: flex-start;
+  }
+}
+@media screen and (min-width: 600px) {
+  .signOutButton:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: 100ms ease-out all;
+  }
+  .signOutButton:active {
+    background-color: rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: 0ms ease-in all;
+  }
+  .messageItem:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: 100ms ease-out all;
+  }
+  .messageItem:active {
+    background-color: rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: 0ms ease-in all;
+  }
 }

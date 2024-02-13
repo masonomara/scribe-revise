@@ -28,3 +28,9 @@
 .menuMobile {
   width: 280px;
 }
+
+@media screen and (min-width: 800px) {
+  .container h1 {
+    margin-left: 280px;
+  }
+}

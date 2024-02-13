@@ -2,7 +2,7 @@
 
 import Message from "@/components/Message";
 import styles from "./page.module.css";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import OpenAI from "openai";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/client";
@@ -38,11 +38,47 @@ export default function Home() {
   const [originalMessage, setOriginalMessage] = useState<string>("");
   const [originalMessageType, setOriginalMessageType] = useState<string>("");
   const [revisions, setRevisions] = useState<string>("");
-  const [revisionsLoading, setRevisionsLoading] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [revisedMessage, setRevisedMessage] = useState<string>("");
   const [user, setUser] = useState<any>(null);
 
-  console.log("user", user);
+  const [messageHistory, setMessageHistory] = useState<any[]>([]);
+
+  const formatDate = (published: any): string => {
+    const options: Intl.DateTimeFormatOptions = {
+      month: "numeric",
+      day: "numeric",
+      year: "2-digit",
+    };
+
+    return new Intl.DateTimeFormat("en-US", options).format(
+      new Date(published)
+    );
+  };
+
+  useEffect(() => {
+    const fetchUserMessages = async () => {
+      try {
+        const supabase = createClient();
+        console.log(user?.user?.id);
+        const { data, error } = await supabase
+          .from("messages")
+          .select("*")
+          .eq("userId", user?.user?.id);
+
+        if (error) {
+          console.error("Error fetching user messages 1:", error);
+        } else {
+          console.log("fetched messages:", data);
+          setMessageHistory(data || []);
+        }
+      } catch (e) {
+        console.error("Error fetching user messages 2:", e);
+      }
+    };
+
+    fetchUserMessages();
+  }, [user]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -115,6 +151,28 @@ export default function Home() {
       );
 
       setRevisedMessage(revisedMessageOutput);
+
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from("messages")
+        .upsert([
+          {
+            originalMessage: userMessage,
+            originalMessageType: userMessageType,
+            revisions: revisionsOutput,
+            revisedMessage: revisedMessageOutput,
+            userId: user?.user?.id,
+          },
+        ])
+        .select()
+        .single();
+
+      if (error) {
+        console.error("Error inserting data into Supabase:", error);
+        // Handle the error or log it
+      } else {
+        console.log("Data inserted successfully:", data);
+      }
     } catch (e) {
       console.error("Error handling click:", e);
     }
@@ -122,10 +180,60 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.sidebar}>
-        <div>{user?.user?.id}</div>
-        <button onClick={handleLogout}>Sign Out</button>
+      <div className={styles.menuWrapper} onClick={() => setMenuOpen(true)}>
+        <Image src="/menu.svg" width={22} height={22} alt="Menu" />
       </div>
+      {user?.user ? (
+        <div
+          className={
+            !menuOpen
+              ? styles.sidebar
+              : `${styles.sidebar} ${styles.sidebarForceOpen}`
+          }
+        >
+          <div className={styles.sidebarHeader}>
+            <div
+              className={styles.closeMenuWrapper}
+              onClick={() => setMenuOpen(false)}
+            >
+              <Image src="/menu.svg" width={22} height={22} alt="Menu" />
+            </div>
+            <div className={styles.menuEmailWrapper}>
+              <p className={styles.menuEmail}>Message History</p>
+            </div>
+          </div>
+          <div className={styles.messageItemContainer}>
+            {messageHistory.map((message) => (
+              <>
+                <div key={message.id} className={styles.messageItem}>
+                  {/* Render each message item here */}
+                  <div className={styles.messageItemText}>
+                    <div className={styles.messageItemHeadWrapper}>
+                      <p className={styles.messageItemHeader}>
+                        {message.originalMessageType}
+                      </p>
+                      <p className={styles.messageItemDate}>
+                        {formatDate(message.created_at)}
+                      </p>
+                    </div>
+                    <p className={styles.messageItemBody}>
+                      {message.revisedMessage}
+                    </p>
+                  </div>
+                </div>
+                <div className={styles.messageItemBorder} />
+              </>
+            ))}
+          </div>
+          <div className={styles.signOutButtonWrapper}>
+            <button onClick={handleLogout} className={styles.signOutButton}>
+              Log Out
+            </button>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
 
       <div className={styles.messageContainer}>
         <div
