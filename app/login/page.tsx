@@ -19,6 +19,23 @@ export default function LoginPage() {
     setPasswordsMatch(e.target.value === confirmPassword);
   };
 
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent the default form submission
+
+    setLoading(true); // Set loading state to true
+
+    try {
+      if (logIn) {
+        await login(new FormData(e.currentTarget)); // Pass form data to login function
+      } else {
+        await signup(new FormData(e.currentTarget)); // Pass form data to signup function
+      }
+    } catch (error) {
+      console.error("Authentication error:", error);
+      // Handle error as needed (e.g., show an error message)
+    }
+  };
+
   const handleConfirmPasswordChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -57,7 +74,10 @@ export default function LoginPage() {
             {logIn ? "Log In" : "Get Started"}
           </p>
 
-          <form className={styles.signUpFormWrapper}>
+          <form
+            onSubmit={handleFormSubmit}
+            className={styles.signUpFormWrapper}
+          >
             <label htmlFor="email" className={styles.signUpLabel}>
               Email:
             </label>
@@ -110,18 +130,18 @@ export default function LoginPage() {
               }`}
             >
               {loading ? (
-                <div className="lds-ring">
+                <div className="lds-ring" style={{ marginTop: "8px" }}>
                   <div></div>
                   <div></div>
                   <div></div>
                   <div></div>
                 </div>
               ) : logIn ? (
-                <button formAction={login} className={styles.signUpLogin}>
+                <button type="submit" className={styles.signUpLogin}>
                   Log In
                 </button>
               ) : (
-                <button formAction={signup} className={styles.signUpLogin}>
+                <button type="submit" className={styles.signUpLogin}>
                   Sign up
                 </button>
               )}
