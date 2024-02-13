@@ -117,19 +117,11 @@ export default function LoginPage() {
                   <div></div>
                 </div>
               ) : logIn ? (
-                <button
-                  formAction={login}
-                  // onClick={() => setLoading(true)}
-                  className={styles.signUpLogin}
-                >
+                <button formAction={login} className={styles.signUpLogin}>
                   Log In
                 </button>
               ) : (
-                <button
-                  formAction={signup}
-                  // onClick={() => setLoading(true)}
-                  className={styles.signUpLogin}
-                >
+                <button formAction={signup} className={styles.signUpLogin}>
                   Sign up
                 </button>
               )}

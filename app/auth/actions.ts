@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
 export async function login(formData: FormData) {
+  console.log("logginin");
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
