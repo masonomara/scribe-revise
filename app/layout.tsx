@@ -1,12 +1,13 @@
-
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import { Analytics } from "@vercel/analytics/react";
 
+import { Metadata } from "next";
+
 const dmsans = Inter({ subsets: ["latin"] });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "ScribeRevise | AI-Powered Revised Messages",
   icons: {
     icon: "icon.ico",
