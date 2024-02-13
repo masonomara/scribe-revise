@@ -230,9 +230,8 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  margin-top: 19px;
-  margin-bottom: -14px;
-
+  width: calc(100% - 32px);
+  margin: 19px 16px -14px;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 .signOutButton {
@@ -323,7 +322,7 @@
   flex-direction: column;
   padding: 8px 0px;
   gap: 8px;
-  height: calc(100% - 48px - 54px);
+  height: calc(100% - 48px - 74px);
   overflow-x: hidden;
   padding: 10px;
 }

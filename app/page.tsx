@@ -183,57 +183,58 @@ export default function Home() {
       <div className={styles.menuWrapper} onClick={() => setMenuOpen(true)}>
         <Image src="/menu.svg" width={22} height={22} alt="Menu" />
       </div>
-      {user?.user ? (
-        <div
-          className={
-            !menuOpen
-              ? styles.sidebar
-              : `${styles.sidebar} ${styles.sidebarForceOpen}`
-          }
-        >
-          <div className={styles.sidebarHeader}>
-            <div
-              className={styles.closeMenuWrapper}
-              onClick={() => setMenuOpen(false)}
-            >
-              <Image src="/menu.svg" width={22} height={22} alt="Menu" />
-            </div>
-            <div className={styles.menuEmailWrapper}>
-              <p className={styles.menuEmail}>Message History</p>
-            </div>
+
+      <div
+        className={
+          !menuOpen
+            ? styles.sidebar
+            : `${styles.sidebar} ${styles.sidebarForceOpen}`
+        }
+      >
+        <div className={styles.sidebarHeader}>
+          <div
+            className={styles.closeMenuWrapper}
+            onClick={() => setMenuOpen(false)}
+          >
+            <Image src="/menu.svg" width={22} height={22} alt="Menu" />
           </div>
-          <div className={styles.messageItemContainer}>
-            {messageHistory.map((message) => (
-              <>
-                <div key={message.id} className={styles.messageItem}>
-                  {/* Render each message item here */}
-                  <div className={styles.messageItemText}>
-                    <div className={styles.messageItemHeadWrapper}>
-                      <p className={styles.messageItemHeader}>
-                        {message.originalMessageType}
-                      </p>
-                      <p className={styles.messageItemDate}>
-                        {formatDate(message.created_at)}
-                      </p>
-                    </div>
-                    <p className={styles.messageItemBody}>
-                      {message.revisedMessage}
+          <div className={styles.menuEmailWrapper}>
+            <p className={styles.menuEmail}>Message History</p>
+          </div>
+        </div>
+        <div className={styles.messageItemContainer}>
+          {messageHistory.map((message) => (
+            <>
+              <div key={message.id} className={styles.messageItem}>
+                {/* Render each message item here */}
+                <div className={styles.messageItemText}>
+                  <div className={styles.messageItemHeadWrapper}>
+                    <p className={styles.messageItemHeader}>
+                      {message.originalMessageType}
+                    </p>
+                    <p className={styles.messageItemDate}>
+                      {formatDate(message.created_at)}
                     </p>
                   </div>
+                  <p className={styles.messageItemBody}>
+                    {message.revisedMessage}
+                  </p>
                 </div>
-                <div className={styles.messageItemBorder} />
-              </>
-            ))}
-          </div>
+              </div>
+              <div className={styles.messageItemBorder} />
+            </>
+          ))}
+        </div>{" "}
+        {user?.user ? (
           <div className={styles.signOutButtonWrapper}>
             <button onClick={handleLogout} className={styles.signOutButton}>
               Log Out
             </button>
           </div>
-        </div>
-      ) : (
-        <></>
-      )}
+        ) : (
+          <></>
+        )}
+      </div>
 
       <div className={styles.messageContainer}>
         <div
