@@ -8,6 +8,7 @@ const dmsans = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "ScribeRevise | AI-Powered Revised Messages",
+  metadataBase: new URL("https://scriberevise.com/"),
   icons: {
     icon: "icon.ico",
   },
