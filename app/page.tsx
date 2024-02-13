@@ -167,7 +167,7 @@ export default function Home() {
         .upsert([
           {
             originalMessage: userMessage,
-            originalMessageType: userMessageType,
+            originalMessageType: userMessageType || "Message",
             revisions: revisionsOutput,
             revisedMessage: revisedMessageOutput,
             userId: user?.user?.id,
@@ -175,6 +175,33 @@ export default function Home() {
         ])
         .select()
         .single();
+
+      const fetchUserMessages = async () => {
+        try {
+          const supabase = createClient();
+          if (user?.user?.id) {
+            const { data, error } = await supabase
+              .from("messages")
+              .select("*")
+              .eq("userId", user?.user?.id);
+
+            if (error) {
+              console.error("Error fetching user messages 1:", error);
+            } else {
+              const sortedMessages = data.sort(
+                (a, b) =>
+                  new Date(b.created_at).getTime() -
+                  new Date(a.created_at).getTime()
+              );
+              setMessageHistory(sortedMessages || []);
+            }
+          }
+        } catch (e) {
+          console.error("Error fetching user messages 2:", e);
+        }
+      };
+
+      fetchUserMessages();
 
       if (error) {
         console.error("Error inserting data into Supabase:", error);
@@ -251,7 +278,6 @@ export default function Home() {
               <Link
                 href={"/login"}
                 target="_top"
-                // onClick={handleLogout}
                 className={styles.signOutButton}
               >
                 Log Out
