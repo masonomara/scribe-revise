@@ -26,6 +26,28 @@ export const metadata: Metadata = {
   },
 };
 
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "ScribeRevise | AI-Powered Revised Messages",
+    metadataBase: new URL("https://scriberevise.com/"),
+    icons: {
+      icon: "icon.ico",
+    },
+    description:
+      "ScribeRevise | AI-powered web app delivering expert suggestions and revised messages for professional emails, academic papers, marketing content, and more.",
+    openGraph: {
+      title: "ScribeRevise | AI-Powered Revised Messages",
+      description:
+        "ScribeRevise | AI-powered web app delivering expert suggestions and revised messages for professional emails, academic papers, marketing content, and more.",
+      images: [
+        {
+          url: "/social.png",
+        },
+      ],
+    },
+  };
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
